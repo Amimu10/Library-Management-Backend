@@ -25,6 +25,7 @@ async function run() {
     // await client.connect();
     // Send a ping to confirm a successful connection
  const bookCollection = client.db("reader-heaven").collection("books");  
+ const bookingCollection = client.db("reader-heaven").collection("bookings");   
  
  app.post("/books", async (req, res) => {
     try {
@@ -100,6 +101,25 @@ async function run() {
     console.log(result);
     res.send(result); 
   });
+
+  
+  app.post("/bookings", async (req, res) => {
+    const booking = req.body;  
+    console.log(booking);
+    const result = await bookingCollection.insertOne(booking); 
+    res.send(result);
+  }); 
+
+//   app.get("/borrowBook/:id", async (req, res) => { 
+//     const id = req.params.id;   
+//     const query = {
+//       _id: new ObjectId(id) 
+// ,
+//     };
+//     const result = await bookCollection.findOne(query); 
+//     console.log(result);
+//     res.send(result); 
+//   }); 
 
   app.get("/readBook/:id", async (req, res) => {
     const id = req.params.id;  
