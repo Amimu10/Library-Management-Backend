@@ -82,7 +82,8 @@ async function run() {
         category: updatedBook.category, 
         author: updatedBook.author, 
         rating: updatedBook.rating, 
-        description: updatedBook.description
+        description: updatedBook.description,
+        read: updatedBook.read
       }, 
     };
     const result = await bookCollection.updateOne(fliter, book, options);
@@ -90,6 +91,17 @@ async function run() {
   });
 
   app.get("/bookDetails/:id", async (req, res) => {
+    const id = req.params.id;  
+    const query = {
+      _id: new ObjectId(id) 
+,
+    };
+    const result = await bookCollection.findOne(query); 
+    console.log(result);
+    res.send(result); 
+  });
+
+  app.get("/readBook/:id", async (req, res) => {
     const id = req.params.id;  
     const query = {
       _id: new ObjectId(id) 
